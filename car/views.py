@@ -1,17 +1,16 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListCreateAPIView
 
 from .serializer import CarSerializer
+from .models import CarModel
 
 
-class CarCreateView(APIView):
+class CarCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = CarSerializer
 
-    def post(self, *args, **kwargs):
-        serializer = CarSerializer(data={'user_id': self.request.user.id, **self.request.data})
-        if not serializer.is_valid():
-            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-        return Response({'message': 'ok'})
+    def get_queryset(self):
+        return CarModel.objects.filter(user=self.request.user)

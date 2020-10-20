@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 urlpatterns = [
-    path('auth/',include('auth_app.urls')),
-    path('users/', include('user.urls')),
-    path('cars/', include('car.urls'))
+    path('auth', include('auth_app.urls')),
+    path('users', include('user.urls')),
+    path('cars', include('car.urls'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

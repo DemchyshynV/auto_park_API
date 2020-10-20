@@ -6,6 +6,5 @@ from .models import CarModel
 class CarSerializer(ModelSerializer):
     class Meta:
         model = CarModel
-        fields = '__all__'
-
-
+        # fields = '__all__'
+        exclude = ['user']
